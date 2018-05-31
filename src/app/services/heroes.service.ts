@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class HeroesService {
-  private heroes: Heroe [] = [
+  private heroes: Heroe[] = [
     {
       nombre: 'Aquaman',
       bio:
@@ -68,10 +68,24 @@ export class HeroesService {
     }
   ];
 
-  constructor() {
-  }
-  getHeroes(): Heroe [] {
+  constructor() {}
+  getHeroes(): Heroe[] {
     return this.heroes;
+  }
+  getHeroe(idx: string) {
+    return this.heroes[idx];
+  }
+
+  searchHeroe(query: string): Heroe[] {
+    const searching = query.toLowerCase();
+    let heroesArray: Heroe[] = [];
+    heroesArray = this.heroes.filter(
+      (heroe, index) => {
+        heroe.index = index;
+        return heroe.nombre.toLowerCase().indexOf(searching) >= 0;
+      }
+    );
+    return heroesArray;
   }
 }
 
@@ -81,4 +95,5 @@ export interface Heroe {
   img: string;
   aparicion: string;
   casa: string;
+  index ?: number;
 }
